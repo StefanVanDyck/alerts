@@ -185,7 +185,7 @@ class UserService {
             user = new User([email: userDetails.email, userId: userDetails.userId, locked: userDetails.locked, frequency: Frequency.findByName("weekly")])
             if (!user.save(flush: true, failOnError: true)) {
                 user.errors.allErrors.each {
-                    log.error(it)
+                    log.error("${it}")
                 }
             }
             // new user gets "Blogs and News" weekly by default (opt out)
@@ -194,7 +194,7 @@ class UserService {
             notificationInstance.user = user
             if (!notificationInstance.save(flush: true)) {
                 notificationInstance.errors.allErrors.each {
-                    log.error(it)
+                    log.error("${it}")
                 }
             }
         }
@@ -241,7 +241,7 @@ class UserService {
             user = new User([email: userDetails.email, userId: userDetails.userId, locked: userDetails.locked, frequency: Frequency.findByName("weekly")])
             if (!user.save(flush: true, failOnError: true)) {
                 user.errors.allErrors.each {
-                    log.error(it)
+                    log.error("${it}")
                 }
             }
         }
