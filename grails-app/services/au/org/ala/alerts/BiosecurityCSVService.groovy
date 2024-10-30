@@ -37,7 +37,7 @@ class BiosecurityCSVService {
     AmazonS3Service amazonS3Service
 
     def list() throws Exception {
-        if (grailsApplication.config.getProperty('biosecurity.csv.s3.enabled', Boolean, false)) {
+        if (grailsApplication.config.getProperty('biosecurity.csv.s3.enabled', Boolean, true)) {
             def s3Directory = grailsApplication.config.getProperty('biosecurity.csv.s3.directory', 'biosecurity')
             def s3Files = amazonS3Service.listObjects(s3Directory)
 
