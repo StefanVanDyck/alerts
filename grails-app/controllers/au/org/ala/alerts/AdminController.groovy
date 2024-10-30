@@ -40,6 +40,7 @@ class AdminController {
     def siteLocale = new Locale.Builder().setLanguageTag(Holders.config.siteDefaultLanguage as String).build()
 
     def subscriptionsPerPage = grailsApplication.config.getProperty('biosecurity.subscriptionsPerPage', Integer, 100)
+
     def index() {}
 
 
@@ -85,7 +86,7 @@ class AdminController {
     @Transactional
     def fixupBiocacheQueries() {
         def toUpdate = []
-        Query.findAllByQueryPathForUI('/occurrences/search?q=*:*&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc').each {
+        Query.findAllByQueryPathForUI('/occurrences/search?q=*:*&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=first_loaded_date&dir=desc').each {
             it.queryPathForUI = it.queryPath.substring(3)
             toUpdate << it
         }
@@ -93,7 +94,7 @@ class AdminController {
         toUpdate.clear()
 
 
-        Query.findAllByQueryPathForUI('/occurrences/search?q=*:*&fq=user_assertions:*&fq=last_assertion_date:[___DATEPARAM___%20TO%20*]&sort=last_assertion_date&dir=desc').each {
+        Query.findAllByQueryPathForUI('/occurrences/search?q=*:*&fq=user_assertions:*&fq=last_assertion_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=last_assertion_date&dir=desc').each {
             it.queryPathForUI = it.queryPath.substring(3)
             toUpdate << it
         }
@@ -101,7 +102,7 @@ class AdminController {
         toUpdate.clear()
 
 
-        Query.findAllByQueryPathForUI('/occurrences/search?q=*:*&fq=last_assertion_date:[___DATEPARAM___%20TO%20*]&sort=last_assertion_date&dir=desc').each {
+        Query.findAllByQueryPathForUI('/occurrences/search?q=*:*&fq=last_assertion_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=last_assertion_date&dir=desc').each {
             it.queryPathForUI = it.queryPath.substring(3)
             toUpdate << it
         }
@@ -282,7 +283,7 @@ class AdminController {
     @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true)
     def getMoreBioSecurityQuery(int startIdx) {
         List queries = queryService.getBiosecurityQuery(startIdx, subscriptionsPerPage)
-        render view: "/admin/_bioSecuritySubscriptions", model: [queries: queries, startIdx: startIdx ]
+        render view: "/admin/_bioSecuritySubscriptions", model: [queries: queries, startIdx: startIdx]
     }
 
     /**
@@ -293,15 +294,15 @@ class AdminController {
     @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true)
     def getBioSecurityQuery(int id) {
         def query = queryService.findBiosecurityQueryById(id)
-       // def queryLog = queryService.getQueryLogs(query, "weekly")
+        // def queryLog = queryService.getQueryLogs(query, "weekly")
         //For be compatible with the method rendering a list of queries AKA subscriptions, we need to convert the single query to a list
-        render view: "/admin/_bioSecuritySubscriptions", model: [queries: [query], startIdx: 0 ]
+        render view: "/admin/_bioSecuritySubscriptions", model: [queries: [query], startIdx: 0]
     }
 
     @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true)
     def countBioSecurityQuery() {
         int total = queryService.countBiosecurityQuery()
-        render (contentType: 'application/json') {
+        render(contentType: 'application/json') {
             count total
         }
     }
@@ -327,10 +328,10 @@ class AdminController {
                 }
             }
 
-            String[] emails = ((String)params.useremails).split(';')
-            Map usermap = emails?.collectEntries{[it.trim(), userService.getUserByEmailOrCreate(it.trim())]}
+            String[] emails = ((String) params.useremails).split(';')
+            Map usermap = emails?.collectEntries { [it.trim(), userService.getUserByEmailOrCreate(it.trim())] }
             def invalidEmails = []
-            usermap.each {entry ->
+            usermap.each { entry ->
                 if (entry.value == null) {
                     invalidEmails.add(entry.key)
                 } else {
@@ -360,7 +361,7 @@ class AdminController {
         def query = Query.get(params.queryid)
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
-        Date since =  sdf.parse(date)
+        Date since = sdf.parse(date)
         Date now = new Date()
 
         def processedJson = biosecurityService.processQueryBiosecurity(query, since, now)
@@ -393,19 +394,19 @@ class AdminController {
         int maxRecords = grailsApplication.config.getProperty("biosecurity.query.maxRecords", Integer, 500)
         render(view: query.emailTemplate,
 //                plugin: "email-confirmation",
-                model: [title: localeSubject,
-                        message: query.updateMessage,
-                        query: query,
-                        moreInfo: qr.queryUrlUIUsed,
-                        speciesListInfo: speciesListInfo,
-                        userAssertions: userAssertions,
-                        listcode: queryService.isMyAnnotation(query) ? "biocache.view.myannotation.list" : "biocache.view.list",
+                model: [title           : localeSubject,
+                        message         : query.updateMessage,
+                        query           : query,
+                        moreInfo        : qr.queryUrlUIUsed,
+                        speciesListInfo : speciesListInfo,
+                        userAssertions  : userAssertions,
+                        listcode        : queryService.isMyAnnotation(query) ? "biocache.view.myannotation.list" : "biocache.view.list",
                         stopNotification: urlPrefix + '/notification/myAlerts',
-                        records: records.take(maxRecords),
-                        frequency: messageSource.getMessage('frequency.' + frequency, null, siteLocale),
-                        totalRecords: records.size(),
-                        unsubscribeAll: urlPrefix + "/unsubscribe?token=test",
-                        unsubscribeOne: unsubscribeOneUrl
+                        records         : records.take(maxRecords),
+                        frequency       : messageSource.getMessage('frequency.' + frequency, null, siteLocale),
+                        totalRecords    : records.size(),
+                        unsubscribeAll  : urlPrefix + "/unsubscribe?token=test",
+                        unsubscribeOne  : unsubscribeOneUrl
                 ])
     }
 
@@ -423,7 +424,7 @@ class AdminController {
         def records = []
         if (query) {
             QueryResult qs = QueryResult.findByQuery(query)
-            if(qs) {
+            if (qs) {
                 def http = new HTTPBuilder(query.baseUrl)
                 try {
                     http.get(path: query.queryPath) { resp, json ->
@@ -452,11 +453,11 @@ class AdminController {
         render(view: query.emailTemplate,
 //                plugin: "email-confirmation",
                 model: [
-                        query: query,
+                        query           : query,
                         stopNotification: urlPrefix + '/notification/myAlerts',
-                        records: records.take(5),
-                        totalRecords: records.size(),
-                        unsubscribeOne: unsubscribeOneUrl,
+                        records         : records.take(5),
+                        totalRecords    : records.size(),
+                        unsubscribeOne  : unsubscribeOneUrl,
                 ])
     }
 
@@ -465,10 +466,10 @@ class AdminController {
         def date = params.date
         String outputFile = "occurrence_alerts_${date}.csv"
         log.info("Generate CSV for Biosecurity queries staring from ${date}")
-        def queries =  queryService.getALLBiosecurityQuery()
+        def queries = queryService.getALLBiosecurityQuery()
 
         //Get all CSV files for each Biosecurity query
-        List<String> csvFiles  = []
+        List<String> csvFiles = []
         queries.each { query ->
             log.info("Generate CSV for Biosecurity query: ${query.name}")
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
@@ -481,23 +482,24 @@ class AdminController {
             csvFiles.add(tempCSV.path)
         }
 
-         //aggregate all CSV files into one
+        //aggregate all CSV files into one
         log.info("Aggregate CSV files into one file")
         def tempFilePath = Files.createTempFile(outputFile, ".csv")
         def tempFile = tempFilePath.toFile()
         tempFile.withWriter { writer ->
             try {
-                csvFiles.eachWithIndex {  csvFile, index ->
+                csvFiles.eachWithIndex { csvFile, index ->
                     new File(csvFile).withReader('UTF-8') { reader ->
                         reader.eachLine { line, lineNumber ->
-                            if (index == 0 || lineNumber > 1) { // Write header from the first file and skip headers from the rest
+                            if (index == 0 || lineNumber > 1) {
+                                // Write header from the first file and skip headers from the rest
                                 writer.writeLine(line)
                             }
                         }
                     }
                 }
 
-            }catch (Exception e) {
+            } catch (Exception e) {
                 log.error("Error in generating CSV file: ${e.message}")
             }
         }
@@ -528,7 +530,7 @@ class AdminController {
     }
 
     /**
-      * @return
+     * @return
      */
 
     @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true)
@@ -558,7 +560,7 @@ class AdminController {
      * Page for debugging and testing all queries
      * @return
      */
-    def query(){
+    def query() {
         def queries = queryService.summarize()
         render view: "/admin/query", model: [queries: queries]
     }
@@ -570,7 +572,7 @@ class AdminController {
      * @param frequency
      * @return
      */
-    def runQueryWithLastCheckDate(){
+    def runQueryWithLastCheckDate() {
         def id = params.queryId
         def frequency = params.frequency
         if (id && frequency) {
@@ -595,7 +597,7 @@ class AdminController {
      * Run the last check and email the result to current user
      * @return
      */
-    def emailMeLastCheck(){
+    def emailMeLastCheck() {
         def id = params.queryId
         def frequency = params.frequency
         if (id && frequency) {
@@ -607,7 +609,7 @@ class AdminController {
                 def records = notificationService.collectUpdatedRecords(qs)
                 User currentUser = userService.getUser()
                 def recipient =
-                    [email: currentUser.email, userUnsubToken: currentUser.unsubscribeToken, notificationUnsubToken: '']
+                        [email: currentUser.email, userUnsubToken: currentUser.unsubscribeToken, notificationUnsubToken: '']
                 emailService.sendGroupNotification(qs, fre, [recipient])
                 def results = ["hasChanged": hasChanged, "records": records, "recipient": currentUser.email]
                 render results as JSON
@@ -626,7 +628,7 @@ class AdminController {
      *
      * @return
      */
-    def initFirstCheckAndEmailMe(){
+    def initFirstCheckAndEmailMe() {
         def id = params.queryId
         def frequency = params.frequency
         if (id && frequency) {
@@ -660,7 +662,7 @@ class AdminController {
      * @param frequency
      * @return
      */
-    def dryRunQuery(){
+    def dryRunQuery() {
         def id = params.queryId
         def frequency = params.frequency
         if (id && frequency) {
@@ -685,7 +687,7 @@ class AdminController {
      * Run a task to execute the query for a specific frequency
      *
      */
-    def dryRunAllQueriesForFrequency(){
+    def dryRunAllQueriesForFrequency() {
         def freq = params.frequency
         Frequency frequency = Frequency.findByName(freq)
         def queries = Query.executeQuery(
@@ -697,12 +699,12 @@ class AdminController {
         int total = queries.size()
 
         response.setContentType("text/plain")
-        def writer= response.getWriter()
+        def writer = response.getWriter()
 
         queries.eachWithIndex { query, index ->
             QueryResult queryResult = notificationService.executeQuery(query, Frequency.findByName(frequency), false, true)
             def records = notificationService.collectUpdatedRecords(queryResult)
-            def results = ["POS": "${index+1}/${total}", "status": queryResult.succeed, "hasChanged": queryResult.hasChanged, "logs": queryResult.getLog(), "brief": queryResult.brief()]
+            def results = ["POS": "${index + 1}/${total}", "status": queryResult.succeed, "hasChanged": queryResult.hasChanged, "logs": queryResult.getLog(), "brief": queryResult.brief()]
 
             writer.write("${results["POS"]}. ${query.id} - ${query.name} - ${frequency}\n")
             writer.write("Status: ${results["status"]}, Changed:${results["hasChanged"]} \n")
@@ -718,7 +720,7 @@ class AdminController {
     def listBiosecurityAuditCSV() {
         def result = [:]
         try {
-            result  = biosecurityCSVService.list()
+            result = biosecurityCSVService.list()
         } catch (Exception e) {
             log.error("Error in listing Biosecurity CSV files: ${e.message}")
             result = [status: 1, message: "Error in listing Biosecurity CSV files: ${e.message}"]
@@ -726,7 +728,7 @@ class AdminController {
         render(view: 'biosecurityCSV', model: result)
     }
 
-    @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true,redirectController = 'notification', redirectAction = 'myAlerts', message = "You don't have permission to view that page.")
+    @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true, redirectController = 'notification', redirectAction = 'myAlerts', message = "You don't have permission to view that page.")
     def aggregateBiosecurityAuditCSV(String folderName) {
         if (!biosecurityCSVService.folderExists(folderName)) {
             render(status: 404, text: 'Data not found')
@@ -738,13 +740,13 @@ class AdminController {
         if (folderName == "/" || folderName.isEmpty()) {
             folderName = "biosecurity_alerts"
         }
-        def saveToFile = folderName +".csv"
+        def saveToFile = folderName + ".csv"
         response.contentType = 'application/octet-stream'
         response.setHeader('Content-Disposition', "attachment; filename=\"${saveToFile}\"")
         response.outputStream << new File(mergedCSVFile).bytes
     }
 
-    @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true,redirectController = 'notification', redirectAction = 'myAlerts', message = "You don't have permission to view that page.")
+    @AlaSecured(value = ['ROLE_ADMIN', 'ROLE_BIOSECURITY_ADMIN'], anyRole = true, redirectController = 'notification', redirectAction = 'myAlerts', message = "You don't have permission to view that page.")
     def downloadBiosecurityAuditCSV(String filename) {
         String contents = biosecurityCSVService.getFile(filename)
         if (!contents) {
@@ -774,7 +776,7 @@ class AdminController {
                 return
             }
 
-            def saveToFile = biosecurityCSVService.sanitizeFileName(qs.query?.name + "-" + (qs.lastChecked?new SimpleDateFormat("yyyy-MM-dd").format(qs.lastChecked):"") + ".csv")
+            def saveToFile = biosecurityCSVService.sanitizeFileName(qs.query?.name + "-" + (qs.lastChecked ? new SimpleDateFormat("yyyy-MM-dd").format(qs.lastChecked) : "") + ".csv")
             response.contentType = 'application/octet-stream'
             response.setHeader('Content-Disposition', "attachment; filename=\"${saveToFile}\"")
             response.outputStream << tempFile.bytes
