@@ -42,12 +42,13 @@ class QueryService {
     Boolean checkChangeByDiff(Query query) {
         !hasAFireProperty(query) && (query.idJsonPath || isMyAnnotation(query))
     }
+
     @NotTransactional
     Boolean hasAFireProperty(Query query) {
         query.propertyPaths.any { it.fireWhenChange || it.fireWhenNotZero }
     }
 
-    Boolean firesWhenNotZero(query){
+    Boolean firesWhenNotZero(query) {
         query.propertyPaths.any { it.fireWhenNotZero }
     }
 
@@ -81,7 +82,7 @@ class QueryService {
         queryResult.propertyValues.each { pv ->
             if (pv.propertyPath.fireWhenNotZero) {
                 // true is 1, false is 0
-                fireWhenNotZeroValue = pv?.currentValue? pv?.currentValue.toInteger() : 0
+                fireWhenNotZeroValue = pv?.currentValue ? pv?.currentValue.toInteger() : 0
             }
         }
         fireWhenNotZeroValue
@@ -183,8 +184,8 @@ class QueryService {
                 name          : messageSource.getMessage("query.service.occurrences.name", [queryDisplayName] as Object[], siteLocale),
                 updateMessage : messageSource.getMessage("query.service.occurrences.update.msg", [queryDisplayName] as Object[], siteLocale),
                 description   : messageSource.getMessage("query.service.occurrences.desc", [queryDisplayName] as Object[], siteLocale),
-                queryPath     : biocacheWebserviceQueryPath + '&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
-                queryPathForUI: biocacheUIQueryPath + '&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc',
+                queryPath     : biocacheWebserviceQueryPath + '&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
+                queryPathForUI: biocacheUIQueryPath + '&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc',
                 dateFormat    : """yyyy-MM-dd'T'HH:mm:ss'Z'""",
                 emailTemplate : '/email/biocache',
                 recordJsonPath: '\$.occurrences',
@@ -202,8 +203,8 @@ class QueryService {
                 name          : messageSource.getMessage("query.service.annotations.name", [queryDisplayName] as Object[], siteLocale),
                 updateMessage : messageSource.getMessage("query.service.annotations.update.msg", [queryDisplayName] as Object[], siteLocale),
                 description   : messageSource.getMessage("query.service.annotations.desc", [queryDisplayName] as Object[], siteLocale),
-                queryPath     : biocacheWebserviceQueryPath + '&fq=(user_assertions:50005%20OR%20user_assertions:50003%20OR%20user_assertions:50002)&fq=last_assertion_date:[___DATEPARAM___%20TO%20*]&sort=last_assertion_date&dir=desc&pageSize=20&facets=basis_of_record',
-                queryPathForUI: biocacheUIQueryPath + '&fq=(user_assertions:50005%20OR%20user_assertions:50003%20OR%20user_assertions:50002)&fq=last_assertion_date:[___DATEPARAM___%20TO%20*]&sort=last_assertion_date&dir=desc',
+                queryPath     : biocacheWebserviceQueryPath + '&fq=(user_assertions:50005%20OR%20user_assertions:50003%20OR%20user_assertions:50002)&fq=last_assertion_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+last_assertion_date&dir=desc&pageSize=20&facets=basis_of_record',
+                queryPathForUI: biocacheUIQueryPath + '&fq=(user_assertions:50005%20OR%20user_assertions:50003%20OR%20user_assertions:50002)&fq=last_assertion_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+last_assertion_date&dir=desc',
                 dateFormat    : """yyyy-MM-dd'T'HH:mm:ss'Z'""",
                 emailTemplate : '/email/biocache',
                 recordJsonPath: '\$.occurrences',
@@ -239,8 +240,8 @@ class QueryService {
                 resourceName  : grailsApplication.config.mail.details.defaultResourceName,
                 updateMessage : messageSource.getMessage("query.service.occurrences.update.msg", [taxonName] as Object[], siteLocale),
                 description   : messageSource.getMessage("query.service.occurrences.desc", [taxonName] as Object[], siteLocale),
-                queryPath     : '/occurrences/taxon/' + taxonGuid + '?fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
-                queryPathForUI: '/occurrences/taxa/' + taxonGuid + '?fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc',
+                queryPath     : '/occurrences/taxon/' + taxonGuid + '?fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
+                queryPathForUI: '/occurrences/taxa/' + taxonGuid + '?fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc',
                 dateFormat    : """yyyy-MM-dd'T'HH:mm:ss'Z'""",
                 emailTemplate : '/email/biocache',
                 recordJsonPath: '\$.occurrences',
@@ -257,8 +258,8 @@ class QueryService {
                 resourceName  : grailsApplication.config.mail.details.defaultResourceName,
                 updateMessage : messageSource.getMessage("query.service.occurrences.recorded.update.msg", [taxonName, regionName] as Object[], siteLocale),
                 description   : messageSource.getMessage("query.service.occurrences.recorded.desc", [taxonName, regionName] as Object[], siteLocale),
-                queryPath     : '/occurrences/taxon/' + taxonGuid + '?fq=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
-                queryPathForUI: '/occurrences/taxa/' + taxonGuid + '?fq=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc',
+                queryPath     : '/occurrences/taxon/' + taxonGuid + '?fq=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
+                queryPathForUI: '/occurrences/taxa/' + taxonGuid + '?fq=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc',
                 dateFormat    : """yyyy-MM-dd'T'HH:mm:ss'Z'""",
                 emailTemplate : '/email/biocache',
                 recordJsonPath: '\$.occurrences',
@@ -275,8 +276,8 @@ class QueryService {
                 resourceName  : grailsApplication.config.mail.details.defaultResourceName,
                 updateMessage : messageSource.getMessage("query.service.occurrences.recorded.update.msg", [speciesGroup, regionName] as Object[], siteLocale),
                 description   : messageSource.getMessage("query.service.occurrences.recorded.desc", [speciesGroup, regionName] as Object[], siteLocale),
-                queryPath     : '/occurrences/search?q=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=species_group:' + speciesGroup + '&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
-                queryPathForUI: '/occurrences/search?q=' + layerId + ':"' + regionName.encodeAsURL() + '"&fq=species_group:' + speciesGroup + '&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc',
+                queryPath     : '/occurrences/search?q=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=species_group:' + speciesGroup + '&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
+                queryPathForUI: '/occurrences/search?q=' + layerId + ':"' + regionName.encodeAsURL() + '"&fq=species_group:' + speciesGroup + '&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc',
                 dateFormat    : """yyyy-MM-dd'T'HH:mm:ss'Z'""",
                 emailTemplate : '/email/biocache',
                 recordJsonPath: '\$.occurrences',
@@ -293,8 +294,8 @@ class QueryService {
                 resourceName  : grailsApplication.config.mail.details.defaultResourceName,
                 updateMessage : messageSource.getMessage("query.service.occurrences.update.msg", [regionName] as Object[], siteLocale),
                 description   : messageSource.getMessage("query.service.occurrences.desc", [regionName] as Object[], siteLocale),
-                queryPath     : '/occurrences/search?q=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
-                queryPathForUI: '/occurrences/search?q=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc',
+                queryPath     : '/occurrences/search?q=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc&pageSize=20&facets=basis_of_record',
+                queryPathForUI: '/occurrences/search?q=' + layerId + ':%22' + regionName.encodeAsURL() + '%22&fq=first_loaded_date:' + '[___DATEPARAM___ TO *]'.encodeAsURL() + '&sort=+first_loaded_date&dir=desc',
                 dateFormat    : """yyyy-MM-dd'T'HH:mm:ss'Z'""",
                 emailTemplate : '/email/biocache',
                 recordJsonPath: '\$.occurrences',
@@ -333,9 +334,9 @@ class QueryService {
         def sList = getSpeciesListName(listid)
         String speciesListName = sList.name
         //differentiate non-authoritative / authoritative list
-        String queryPathForUITemplate = grailsApplication.config.getProperty("biosecurity.query.template.nonAuthoritativeList", String, "/occurrences/search?q=species_list:___LISTIDPARAM___&fq=decade:2020&fq=country:Australia&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&fq=occurrence_date:[___LASTYEARPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&disableAllQualityFilters=true")
+        String queryPathForUITemplate = grailsApplication.config.getProperty("biosecurity.query.template.nonAuthoritativeList", String, "/occurrences/search?q=species_list:___LISTIDPARAM___&fq=decade:2020&fq=country:Australia&fq=first_loaded_date:" + "[___DATEPARAM___ TO *]".encodeAsURL() + "&fq=occurrence_date:" + "[___LASTYEARPARAM___ TO *]".encodeAsURL() + "&sort=first_loaded_date&dir=desc&disableAllQualityFilters=true")
         if (sList.isAuthoritative) {
-            queryPathForUITemplate = grailsApplication.config.getProperty("biosecurity.query.template.authoritativeList", String, "/occurrences/search?q=species_list_uid:___LISTIDPARAM___&fq=decade:2020&fq=country:Australia&fq=first_loaded_date:[___DATEPARAM___%20TO%20*]&fq=occurrence_date:[___LASTYEARPARAM___%20TO%20*]&sort=first_loaded_date&dir=desc&disableAllQualityFilters=true")
+            queryPathForUITemplate = grailsApplication.config.getProperty("biosecurity.query.template.authoritativeList", String, "/occurrences/search?q=species_list_uid:___LISTIDPARAM___&fq=decade:2020&fq=country:Australia&fq=first_loaded_date:" + "[___DATEPARAM___ TO *]".encodeAsURL() + "&fq=occurrence_date:" + "[___LASTYEARPARAM___ TO *]".encodeAsURL() + "&sort=first_loaded_date&dir=desc&disableAllQualityFilters=true")
         }
 
         String queryPathForUI = queryPathForUITemplate.replaceAll("___LISTIDPARAM___", listid)
@@ -365,7 +366,7 @@ class QueryService {
     // remove all user notifications for the specified query
     def unsubscribeAllUsers(Long queryId) {
         def users = getSubscribers(Long.valueOf(queryId))
-        users?.forEach{user -> notificationService.deleteAlertForUser((User)user, queryId)}
+        users?.forEach { user -> notificationService.deleteAlertForUser((User) user, queryId) }
     }
 
     // delete a query (also remove all subscriptions)
@@ -388,7 +389,7 @@ class QueryService {
     }
 
     // get biosecurity queries with offset and limit
-    def getBiosecurityQuery(int offset,int limit) {
+    def getBiosecurityQuery(int offset, int limit) {
         def criteria = Query.createCriteria()
         List<Query> queries = criteria.list(max: limit, offset: offset) {
             eq('emailTemplate', '/email/biosecurity')
@@ -396,8 +397,7 @@ class QueryService {
         }
 
 
-
-        def results = queries.collect{ query ->
+        def results = queries.collect { query ->
             // Bioseurity queries are weekly ONLY, so filter out the other frequencies
             def filteredQueryResults = query.queryResults.findAll { it.frequency?.name == 'weekly' }
             // Get the last QueryResult from the filtered list, if it exists
@@ -459,9 +459,9 @@ class QueryService {
             def resp = webService.get(grailsApplication.config.getProperty('lists.baseURL') + "/ws/speciesListInternal/" + listid, [:], ContentType.APPLICATION_JSON, true, false)
 
             if (resp?.resp?.listName) {
-               info.name = resp?.resp?.listName
+                info.name = resp?.resp?.listName
             }
-            info.isAuthoritative =resp?.resp?.isAuthoritative
+            info.isAuthoritative = resp?.resp?.isAuthoritative
         } catch (Exception ex) {
             log.error("Failed to get species list detail from " + listURL, ex)
         }
@@ -476,7 +476,7 @@ class QueryService {
             // Execute a raw SQL for full-text match query
             String query = "SELECT * FROM query WHERE name LIKE '%${keywords}%' AND email_template = '/email/biosecurity' LIMIT 10 "
             result = sql.rows(query)
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Handle any exceptions
             log.error(e.message)
         }
@@ -495,7 +495,7 @@ class QueryService {
             def query = Query.findById(id)
             if (query) {
                 //Manually delete all related PropertyPath and PropertyValue, since the cascade delete does not work
-                PropertyPath.findAllByQuery(query).each { PropertyPath pp->
+                PropertyPath.findAllByQuery(query).each { PropertyPath pp ->
                     log.debug("Deleting property path of : ${id}")
                     PropertyValue.findAllByPropertyPath(pp).each { PropertyValue pv ->
                         pv.delete(flush: true)
@@ -542,11 +542,11 @@ class QueryService {
      * List all queries grouped by email template
      */
     def summarize() {
-        List<Query> queries =  Query.createCriteria().list {
+        List<Query> queries = Query.createCriteria().list {
             ne("name", "My Annotations")
         }
 
-        List<Query> annotations =  Query.createCriteria().list {
+        List<Query> annotations = Query.createCriteria().list {
             eq("name", "My Annotations")
             createAlias("notifications", "n")
             createAlias("n.user", "u")
@@ -554,7 +554,7 @@ class QueryService {
         }
 
         Map<String, List<Query>> groupedByTemplate = queries.groupBy { it.emailTemplate }.collectEntries { key, value ->
-            [ (key.replace("/email/", "")) : value.sort { it.name }]
+            [(key.replace("/email/", "")): value.sort { it.name }]
         }
         groupedByTemplate['annotations'] = annotations
 
