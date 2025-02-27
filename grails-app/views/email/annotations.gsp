@@ -8,30 +8,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><g:message code="alert.title" args="[query.resourceName]" /></title>
 </head>
-<style>
-</style>
-<body style="background-color: #f4f4f4;margin: 0;padding: 0;font-family: 'Arial', sans-serif;font-size: 16px;line-height: 1.5;">
+<g:render template="/email/vlaanderenStyle"/>
+<body style="background-color: #f4f4f4;margin: 0;padding: 0;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;">
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f4;border-spacing: 0;border-collapse: collapse;">
     <tr>
-        <td align="center" style="padding: 20px;font-family: 'Arial', sans-serif;font-size: 16px;line-height: 1.5;">
-            <table border="0" cellpadding="0" cellspacing="0" width="650" style="background-color: #ffffff;font-family: 'Arial', sans-serif;font-size: 16px;line-height: 1.5;border-spacing: 0;border-collapse: collapse;">
+        <td align="center" style="padding: 20px;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;">
+            <table border="0" cellpadding="0" cellspacing="0" width="650" style="background-color: #ffffff;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;border-spacing: 0;border-collapse: collapse;">
                 <!-- Logo -->
                 <tr>
                     <td style="text-align: center; padding: 20px; background-color: #fff;">
-                        <a href="https://www.ala.org.au" target="_blank" >
-                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/logo-dark.png'}" height="60" alt="Logo" style="display: block; margin: auto;border: 0;line-height: 100%;">
+                        <a href="https://natuurdata.dev.inbo.be" target="_blank" >
+                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal-logo-wit.png'}" height="60" alt="Logo" style="display: block; margin: auto;border: 0;line-height: 100%;">
                         </a>
                     </td>
                 </tr>
                 <!-- Header -->
                 <tr>
-                    <td  align="center" background="${grailsApplication.config.grails.serverURL}/assets/email/banner-ocean.png" width="620" height="120" style="color:white;background-color:#003A70;padding: 20px 10px 20px 10px;text-align: center;font-family: 'Arial', sans-serif;font-size: 16px;line-height: 1.5;background-image:url(${grailsApplication.config.grails.serverURL}/assets/email/banner-ocean.png);background-position: top center;background-size: cover;background-repeat: no-repeat">
-                        <h1 style="font-size: 24px; color: #fff;">ALA Alerts - ${query.name}</h1>
+                    <td height="120" style="color:white;background-color:rgba(128, 128, 128, 0.85);padding: 20px 10px 20px 10px;text-align: center;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;background-image:url(${grailsApplication.config.grails.serverURL}/assets/email/kluut.jpg);background-position: top center;background-size: cover;background-repeat: no-repeat">
+                        <h1 style="font-size: 24px; color: #fff;">VBP Alerts - ${query.name}</h1>
                         <p style="font-size: 16px; color: #fff;"><strong>${new SimpleDateFormat("dd MMM yyyy").format(new Date())}</strong></p>
                     </td>
                 </tr>
                 <tr>
-                    <td style="background-color: #E8E8E8;color: #000;padding: 40px 30px 40px 30px;text-align: center;font-family: 'Arial', sans-serif;font-size: 22px;line-height: 1.5;">
+                    <td style="background-color: #E8E8E8;color: #000;padding: 40px 30px 40px 30px;text-align: center;font-family: 'flanders-sans', sans-serif;font-size: 22px;line-height: 1.5;">
                         <div> ${totalRecords} occurrence ${totalRecords == 1 ? 'record' : 'records'} ${totalRecords == 1 ? 'has' : 'have'} been updated
                         </div>
                     </td>
@@ -39,13 +38,13 @@
             <!-- Records Section -->
                 <g:each status="i" in="${records}" var="oc">
                     <tr>
-                        <td style="padding: 20px;background-color: white;font-family: 'Arial', sans-serif;font-size: 14px;line-height: 1.5;">
+                        <td style="padding: 20px;background-color: white;font-family: 'flanders-sans', sans-serif;font-size: 14px;line-height: 1.5;">
                         <g:set var="occurrencelink" value="${query.baseUrlForUI}/occurrences/${oc.uuid}"></g:set>
                         <g:set var="assertionlink" value="${query.baseUrl}/occurrences/${oc.uuid}/assertions"></g:set>
                         <table style="width: 100%">
                             <tr style="vertical-align: top;">
                                 <td style="width: 37%">
-                                    <a href="${occurrencelink}" style="color: #C44D34;text-decoration: none;font-family: 'Arial', sans-serif;font-size: 16px;line-height: 1.5;">
+                                    <a href="${occurrencelink}" style="color: #C44D34;text-decoration: none;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;">
                                         <g:if test="${ oc.scientificName?:oc.vernacularName ?: oc.raw_raw_scientificName}">
                                             <strong>${i+1}. <em>${oc.scientificName?: oc.vernacularName ?: oc.raw_raw_scientificName }</em></strong>
                                         </g:if>

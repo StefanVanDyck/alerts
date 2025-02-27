@@ -11,17 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
   </head>
+  <g:render template="/email/vlaanderenStyle"/>
   <body style="background-color: #f4f4f4;padding: 0;line-height: 1.5;-webkit-font-smoothing: antialiased;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;width: 100% !important;margin: 0 !important;">
-    <div class="main-shadow-div default-font" style="vertical-align: top;font-family: 'Lato', Helvetica, Arial, sans-serif;font-size: 16px;font-weight: 500;line-height: 1.42;letter-spacing: -0.4px;mso-table-lspace: 0;mso-table-rspace: 0;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);width: 100%;max-width: 620px;margin: 20px auto 0;">
+    <div class="main-shadow-div default-font" style="vertical-align: top;font-family: 'flanders-sans', sans-serif;font-size: 16px;font-weight: 500;line-height: 1.42;letter-spacing: -0.4px;mso-table-lspace: 0;mso-table-rspace: 0;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);width: 100%;max-width: 620px;margin: 20px auto 0;">
       <div class="center-white-div" style="display: flex;vertical-align: top;justify-content: center;align-items: center;background-color: #ffffff;padding: 20px 20px 10px 20px;">
-        <a href="https://www.ala.org.au" style="text-decoration: none;">
-        <img src="${grailsApplication.config.grails.serverURL + '/assets/email/logo-dark.png'}" height="60" alt="" style="border: 0;line-height: 100%;outline: 0;">
-        </a>
+        <a class="navbar-brand" href="::centralServer::" data-i18n="general.orgfullname"></a>
       </div>
-      <div class="background-image-div padding " style="padding: 20px 10px 20px 10px;vertical-align: top; text-align:center;background-image: url(${grailsApplication.config.grails.serverURL}/assets/email/banner-ocean.png);">
-        <div class="default-font large-white-font" style="vertical-align: top;font-family: 'Lato', Helvetica, Arial, sans-serif;font-size: 24px;font-weight: 700;line-height: 1.42;letter-spacing: -0.4px;color: #ffffff;">Latest ALA Blog Updates</div>
+      <div class="background-image-div padding " style="padding: 20px 10px 20px 10px;vertical-align: top; text-align:center;background-image: url(${grailsApplication.config.grails.serverURL}/assets/email/kluut.jpg);">
+        <div class="default-font large-white-font" style="vertical-align: top;font-family: 'flanders-sans', sans-serif;font-size: 24px;font-weight: 700;line-height: 1.42;letter-spacing: -0.4px;color: #ffffff;">Latest VBP Blog Updates</div>
         <br>
-        <div class="default-font" style="vertical-align: top;font-family: 'Lato', Helvetica, Arial, sans-serif;font-size: 16px;font-weight: 500;line-height: 1.42;letter-spacing: -0.4px;color: #ffffff;">
+        <div class="default-font" style="vertical-align: top;font-family: 'flanders-sans', sans-serif;font-size: 16px;font-weight: 500;line-height: 1.42;letter-spacing: -0.4px;color: #ffffff;">
           <b>${new SimpleDateFormat("dd MMM yyyy").format(new Date())}</b>
         </div>
       </div>
@@ -75,36 +74,11 @@
         </div>
       </g:each>
       <div class="button-div" style="padding: 20px 20px 20px 20px;background-color: white;display: flex;flex-direction: row;justify-content: center;">
-        <a href="${grailsApplication.config.ala.baseURL + '/blog'}">
-        <button class="record-button" style="background-color: #C44D34;cursor: pointer;border: 0;border-radius: 10px;color: white;padding: 11px 19px;text-align: center;display: inline-block;font-size: 16px;"><strong>All ALA news &amp; updates</strong>
+        <a href="https://natuurdata.dev.inbo.be">
+        <button class="record-button" style="background-color: #a83d7a;;cursor: pointer;border: 0;border-radius: 10px;color: white;padding: 11px 19px;text-align: center;display: inline-block;font-size: 16px;"><strong>All VBP news &amp; updates</strong>
         </button>
         </a>
       </div>
-      <div class="info-div" style="padding: 20px 70px 14px 70px;background-color: #C44D34;font-size: 14px;line-height: 1.43;letter-spacing: -0.2px;color: #ffffff;text-align: center;">
-        <p>The Atlas of Living Australia acknowledges Australia's Traditional Owners and pays respect to the past and present Elders of the nation's Aboriginal and Torres Strait Islander communities.</p>
-        <p>
-          We honour and celebrate the spiritual, cultural and customary connections of Traditional Owners to Country and the biodiversity that forms part of that Country.
-        </p>
-      </div>
-      <div class="info-div normal-font-color" style="padding: 20px 70px 14px 70px;background-color: #ffffff;font-size: 14px;line-height: 1.43;letter-spacing: -0.2px;color: #000000;text-align: center;">
-        <div>
-          <img src="${grailsApplication.config.grails.serverURL}/assets/email/ncris.png" alt="Affiliated orgs" usemap="#orgsMap" height="80" style="border: 0;line-height: 100%;outline: 0;">
-          <map name="orgsMap">
-            <area shape="rect" coords="0,0,100,100" href="https://www.education.gov.au/ncris" alt="NCRIS">
-            <area shape="rect" coords="100,0,180,100" href="https://csiro.au" alt="CSIRO">
-            <area shape="rect" coords="180,0,300,100" href="https://www.gbif.org/" alt="GBIF">
-          </map>
-          <div>
-            You are receiving this email because you opted in to ALA blog alerts.
-            <div>
-              <p>Our mailing address is: </p>
-              Atlas of Living Australia <br> GPO Box 1700<br> Canberra, ACT 2601<br>Australia
-            </div>
-            <br>
-            Don't want to receive these emails? You can <a href="${unsubscribeOne}" style="color: #C44D34;">unsubscribe</a>.
-          </div>
-        </div>
-      </div>
-    </div>
+      <g:render template="/email/footer"/>
   </body>
 </html>
