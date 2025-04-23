@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: 300;
     src: local("☺"),
-    url("../fonts/FlandersArtSans-Light.woff") format("woff")
+    url("/fonts/FlandersArtSans-Light.woff") format("woff")
   }
   
   @font-face {
@@ -11,7 +11,7 @@
     font-style: normal;
     font-weight: 400;
     src: local("☺"),
-    url("../fonts/FlandersArtSans-Regular.woff") format("woff")
+    url("/fonts/FlandersArtSans-Regular.woff") format("woff")
   }
   
   @font-face {
@@ -19,7 +19,7 @@
     font-style: normal;
     font-weight: 500;
     src: local("☺"),
-    url("../fonts/FlandersArtSans-Medium.woff") format("woff")
+    url("/fonts/FlandersArtSans-Medium.woff") format("woff")
   }
   
   @font-face {
@@ -27,7 +27,7 @@
     font-style: normal;
     font-weight: 700;
     src: local("☺"),
-    url("../fonts/FlandersArtSans-Bold.woff") format("woff")
+    url("/fonts/FlandersArtSans-Bold.woff") format("woff")
   }
   
   @font-face {
@@ -35,7 +35,7 @@
     font-style: normal;
     font-weight: 300;
     src: local("☺"),
-    url("../fonts/FlandersArtSerif-Light.woff") format("woff")
+    url("/fonts/FlandersArtSerif-Light.woff") format("woff")
   }
   
   @font-face {
@@ -43,7 +43,7 @@
     font-style: normal;
     font-weight: 400;
     src: local("☺"),
-    url("../fonts/FlandersArtSerif-Regular.woff") format("woff")
+    url("/fonts/FlandersArtSerif-Regular.woff") format("woff")
   }
   
   @font-face {
@@ -51,7 +51,7 @@
     font-style: normal;
     font-weight: 500;
     src: local("☺"),
-    url("../fonts/FlandersArtSerif-Medium.woff") format("woff")
+    url("/fonts/FlandersArtSerif-Medium.woff") format("woff")
   }
   
   @font-face {
@@ -59,7 +59,7 @@
     font-style: normal;
     font-weight: 700;
     src: local("☺"),
-    url("../fonts/FlandersArtSerif-Bold.woff") format("woff")
+    url("/fonts/FlandersArtSerif-Bold.woff") format("woff")
   }
 
   body {
