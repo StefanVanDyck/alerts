@@ -44,7 +44,7 @@
                 <tr>
                     <td style="text-align: center; padding: 20px; background-color: #fff;">
                         <a href="https://natuurdata.dev.inbo.be" target="_blank" >
-                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal-logo-wit.png'}" height="60" alt="Logo" style="display: block; margin: auto;border: 0;line-height: 100%;">
+                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal_logo_wit.png'}" height="60" alt="Logo" style="display: block; margin: auto;border: 0;line-height: 100%;">
                         </a>
                     </td>
                 </tr>

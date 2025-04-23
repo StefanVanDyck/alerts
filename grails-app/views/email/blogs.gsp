@@ -9,13 +9,18 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="x-apple-disable-message-reformatting">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <asset:stylesheet href="custom.css"/>
+    <asset:stylesheet href="fonts.css"/>
     <title>${title}</title>
   </head>
-  <g:render template="/email/vlaanderenStyle"/>
   <body style="background-color: #f4f4f4;padding: 0;line-height: 1.5;-webkit-font-smoothing: antialiased;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;width: 100% !important;margin: 0 !important;">
     <div class="main-shadow-div default-font" style="vertical-align: top;font-family: 'flanders-sans', sans-serif;font-size: 16px;font-weight: 500;line-height: 1.42;letter-spacing: -0.4px;mso-table-lspace: 0;mso-table-rspace: 0;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);width: 100%;max-width: 620px;margin: 20px auto 0;">
-      <div class="center-white-div" style="display: flex;vertical-align: top;justify-content: center;align-items: center;background-color: #ffffff;padding: 20px 20px 10px 20px;">
-        <a class="navbar-brand" href="::centralServer::" data-i18n="general.orgfullname"></a>
+      <div class="center-white-div" style="display: flex;vertical-align: top;justify-content: center;align-items: center;background-color: #ffffff;padding: 20px 20px 10px 20px;font-size: 18px;font-weight: 700">
+        <div class="navbar-default">
+          <a class="navbar-brand" href="${grailsApplication.config.grails.serverURL}" data-i18n="general.orgfullname">
+            <g:message code="general.orgfullname"/>
+          </a>
+        </div>
       </div>
       <div class="background-image-div padding " style="padding: 20px 10px 20px 10px;vertical-align: top; text-align:center;background-image: url(${grailsApplication.config.grails.serverURL}/assets/email/kluut.jpg);">
         <div class="default-font large-white-font" style="vertical-align: top;font-family: 'flanders-sans', sans-serif;font-size: 24px;font-weight: 700;line-height: 1.42;letter-spacing: -0.4px;color: #ffffff;">Latest VBP Blog Updates</div>
@@ -79,6 +84,6 @@
         </button>
         </a>
       </div>
-      <g:render template="/email/footer"/>
   </body>
+  <g:render template="/email/footer"/>
 </html>

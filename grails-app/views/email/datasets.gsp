@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <asset:stylesheet href="custom.css"/>
+    <asset:stylesheet href="fonts.css"/>
     <title><g:message code="alert.title" args="[query.resourceName]" /></title>
 </head>
 <g:render template="/email/vlaanderenStyle"/>
@@ -17,8 +19,8 @@
                 <!-- Logo -->
                 <tr>
                     <td style="text-align: center; padding: 20px; background-color: #fff;">
-                        <a href="https://natuurdata.dev.inbo.be" target="_blank" >
-                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal-logo-wit.png'}" height="60" alt="Logo" style="display: block; margin: auto;border: 0;line-height: 100%;">
+                        <a href="${grailsApplication.config.grails.serverURL}" target="_blank" >
+                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal_logo_wit.png'}" height="60" alt="Logo" style="display: block; margin: auto;border: 0;line-height: 100%;">
                         </a>
                     </td>
                 </tr>

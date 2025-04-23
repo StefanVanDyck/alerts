@@ -18,7 +18,7 @@
                 <tr>
                     <td align="center" style="padding: 20px; background-color: #fff;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;">
                         <a href="https://natuurdata.dev.inbo.be" target="_blank" style="font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;">
-                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal-logo-wit.png'}" height="60" alt="Logo" style="display: block;border: 0;line-height: 100%;">
+                            <img src="${grailsApplication.config.grails.serverURL + '/assets/email/Portaal_logo_wit.png'}" height="60" alt="Logo" style="display: block;border: 0;line-height: 100%;">
                         </a>
                     </td>
                 </tr>
