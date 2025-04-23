@@ -3,5 +3,7 @@
         <g:message code="email.unsubscribe.query" args="[unsubscribeOne, queryName]" />
         <br>
         <a href="${stopNotification}"><g:message code="alert.manage" /></a>
+        <br/>
+        <a href="mailto:support.natuurdata@inbo.be"><g:message code="alert.support"/></a>
     </td>
 </tr>

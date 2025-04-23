@@ -8,50 +8,17 @@
   src: local("☺"), url("https://dij151upo6vad.cloudfront.net/2.latest/fonts/flanders-sans-regular.eot?#iefix") format("embedded-opentype"), url("https://dij151upo6vad.cloudfront.net/2.latest/fonts/flanders-sans-regular.woff") format("woff"), url("https://dij151upo6vad.cloudfront.net/2.latest/fonts/flanders-sans-regular.ttf") format("truetype"), url("https://dij151upo6vad.cloudfront.net/2.latest/fonts/flanders-sans-regular.svg#a781d42e8795b6c33f49152946c2a117") format("svg");
 }
 
-.index-footer {
-  padding-top: 40px;
-  padding-bottom: 20px;
-  background-color: white;
-  font-family: 'flanders-sans', sans-serif;
+.banner {
+  border-bottom: 1px solid #a83d7a;
+  /* box-shadow: 0px 1px 2px #a83d7a; */
 }
 
-.index-footer .title {
-  font-size: 20px;
-  color: #0d0d0d;
-  line-height: 26px;
+.navbar-brand {
   text-transform: uppercase;
-  margin-bottom: 10px;
+  color: #a83d7a;
+  padding-right: 15px;
+  height: fit-content;
   font-weight: bold;
-}
-
-.index-footer ul {
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
-}
-
-.index-footer li {
-  padding-left: 1em;
-  text-indent: -1em;
-}
-
-.index-footer li:before {
-  content: "›";
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #0d0d0d;
-}
-
-.index-footer a {
-  color: #0d0d0d;
-}
-
-.index-footer address {
-  margin: 0;
-}
-
-.index-footer .socials {
-  margin-top: 2em;
 }
 
 </style>
