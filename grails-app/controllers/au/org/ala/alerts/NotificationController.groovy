@@ -1,5 +1,6 @@
 package au.org.ala.alerts
 
+import au.org.ala.web.AlaSecured
 import grails.converters.JSON
 import io.micronaut.http.HttpStatus
 
@@ -16,6 +17,7 @@ class NotificationController {
 
     def myalerts = { redirect(action: "myAlerts", params: params) }
 
+    @AlaSecured(value = ['ROLE_USER'], redirectUri = "/")
     def myAlerts = {
         User user = userService.getUser()
         log.debug('Viewing my alerts :  ' + user)
