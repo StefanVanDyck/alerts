@@ -25,13 +25,19 @@
                 <!-- Header -->
                 <tr>
                     <td height="120" style="color:white;background-color:rgba(128, 128, 128, 0.85);padding: 20px 10px 20px 10px;text-align: center;font-family: 'flanders-sans', sans-serif;font-size: 16px;line-height: 1.5;background-image:url(${grailsApplication.config.grails.serverURL}/assets/email/kluut.jpg);background-position: top center;background-size: cover;background-repeat: no-repeat">
-                        <h1 style="font-size: 24px; color: #fff;">VBP Alerts - ${query.name}</h1>
+                        <h1 style="font-size: 24px; color: #fff;"><g:message code="alerts.email.heading" args="${[query.name]}"/></h1>
                         <p style="font-size: 16px; color: #fff;"><strong>${new SimpleDateFormat("dd MMM yyyy").format(new Date())}</strong></p>
                     </td>
                 </tr>
                 <tr>
                     <td style="background-color: #E8E8E8;color: #000;padding: 40px 30px 40px 30px;text-align: center;font-family: 'flanders-sans', sans-serif;font-size: 22px;line-height: 1.5;">
-                        <div> ${totalRecords} occurrence ${totalRecords == 1 ? 'record' : 'records'} ${totalRecords == 1 ? 'has' : 'have'} been updated
+                        <div>
+                            <g:if test="${totalRecords == 1}">
+                                <g:message code="biocache.occurrences.record.update.title" args="${[totalRecords]}"/>
+                            </g:if>
+                            <g:else>
+                                <g:message code="biocache.occurrences.records.update.title" args="${[totalRecords]}"/>
+                            </g:else>
                         </div>
                     </td>
                 </tr>
@@ -52,15 +58,15 @@
                                         ${oc.scientificName}<br/>
                                         <g:if test="${oc.taxonRankID > 5000}"></i></g:if>
                                         ${oc.stateProvince}<br/>
-                                        Family: ${oc.family}<br/>
+                                        <g:message code="alerts.family" args="${[oc.family]}"/><br/>
                                         <g:if test="${oc.dataProviderName}">
-                                            Source: ${oc.dataProviderName}
+                                            <g:message code="alerts.source" args="${[oc.dataProviderName]}"/>
                                         </g:if>
                                     </p>
                                 </td>
                                 <td class="annotation" nowrap="nowrap" style="width: 30%">
                                     <g:if test="${oc.eventDate}">
-                                        Date created: ${new SimpleDateFormat("dd MMM yyyy").format(oc.eventDate)}<br/>
+                                        <g:message code="alerts.date.created" args="${[new SimpleDateFormat("dd MMM yyyy").format(oc.eventDate)]}"/><br/>
                                     </g:if>
                                 </td>
                                 <td style="width: 33%; text-align: center; vertical-align: middle;" >

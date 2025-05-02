@@ -31,7 +31,7 @@ class BootStrap {
                 "classpath:messages"
         )
 
-        siteLocale = new Locale.Builder().setLanguageTag(grailsApplication.config.siteDefaultLanguage).build();
+        siteLocale = new Locale.Builder().setLanguageTag(grailsApplication.config.getProperty('siteDefaultLanguage', String, 'nl')).build();
         Locale.setDefault(siteLocale)
 
         preloadQueries()
